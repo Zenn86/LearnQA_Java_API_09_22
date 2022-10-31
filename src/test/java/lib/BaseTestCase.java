@@ -1,7 +1,6 @@
 package lib;
 
 import io.restassured.RestAssured;
-import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -9,11 +8,12 @@ import io.restassured.response.Response;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.hamcrest.Matchers.hasKey;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BaseTestCase {
 
-    protected Response getResponce(String url) {
+    protected Response getResponse(String url) {
         Response response = RestAssured
                 .get(url)
                 .andReturn();
@@ -58,4 +58,11 @@ public class BaseTestCase {
         assertFalse(value.equals(null));
         return value;
     }
+
+    protected int getIntFromJson(Response response, String name) {
+        response.then().assertThat().body("$", hasKey(name));
+        return response.jsonPath().getInt(name);
+    }
+
+
 }
