@@ -1,3 +1,5 @@
+package Exersizes;
+
 import io.restassured.path.json.JsonPath;
 import lib.BaseTestCase;
 import org.junit.jupiter.params.ParameterizedTest;

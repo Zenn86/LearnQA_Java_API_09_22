@@ -1,3 +1,5 @@
+package Exersizes;
+
 import io.restassured.response.Response;
 import lib.BaseTestCase;
 import org.junit.jupiter.api.Test;
@@ -10,7 +12,7 @@ public class Ex12Test extends BaseTestCase {
 
     @Test
     public void testHeader() {
-        Response response = getResponce(url);
+        Response response = getResponse(url);
         assertEquals(expectedValue, getHeader(response, expectedHeader), "Header search error");
     }
 

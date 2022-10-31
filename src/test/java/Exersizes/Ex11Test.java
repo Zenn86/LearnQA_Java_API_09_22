@@ -1,3 +1,5 @@
+package Exersizes;
+
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import lib.BaseTestCase;
@@ -10,7 +12,7 @@ public class Ex11Test extends BaseTestCase {
     String url = "https://playground.learnqa.ru/api/homework_cookie";
     @Test
     public void testCookie() {
-        Response response = getResponce(url);
+        Response response = getResponse(url);
         assertFalse(response.getCookies().isEmpty(), "There is no cookies");
         Map<String, String> cookies = response.getCookies();
         Response response2 = RestAssured
