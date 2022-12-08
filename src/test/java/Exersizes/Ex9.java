@@ -13,23 +13,24 @@ public class Ex9 {
     public void testPassword() {
 
         List<String> passwords = new ArrayList<>();
-        try (FileReader f = new FileReader("src/test/resources/passwords.txt")) {
-            StringBuffer sb = new StringBuffer();
-            while (f.ready()) {
-                char c = (char) f.read();
-                if (c == '\n') {
-                    passwords.add(sb.toString());
-                    sb = new StringBuffer();
-                } else {
-                    sb.append(c);
-                }
-            }
-            if (sb.length() > 0) {
-                passwords.add(sb.toString());
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        try (FileReader f = new FileReader("src/test/resources/passwords.txt")) {
+//            StringBuffer sb = new StringBuffer();
+//            while (f.ready()) {
+//                char c = (char) f.read();
+//                if (c == '\n') {
+//                    passwords.add(sb.toString());
+//                    sb = new StringBuffer();
+//                } else {
+//                    sb.append(c);
+//                }
+//            }
+//            if (sb.length() > 0) {
+//                passwords.add(sb.toString());
+//            }
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+        passwords.add("welcome");
 
         Map<String, String> authData1 = new HashMap<>();
         authData1.put("login", "super_admin");
