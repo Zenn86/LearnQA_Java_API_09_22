@@ -9,12 +9,8 @@ import java.io.IOException;
 import java.util.*;
 
 public class Ex9 {
-
-
-
-
     @Test
-    public void testMap() {
+    public void testPassword() {
 
         List<String> passwords = new ArrayList<>();
         try (FileReader f = new FileReader("src/test/resources/passwords.txt")) {
@@ -47,7 +43,7 @@ public class Ex9 {
                     .andReturn();
 
             String auth_cookie = response.getCookie("auth_cookie");
-            System.out.println(i);
+            System.out.println("password №" + (i + 1) + ": " + passwords.get(i));
             if (testCookie(auth_cookie)) {
                 System.out.println("Right cookie: " + auth_cookie);
                 break;
