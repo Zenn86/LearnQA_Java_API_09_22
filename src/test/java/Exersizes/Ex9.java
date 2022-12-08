@@ -30,7 +30,9 @@ public class Ex9 {
 //        } catch (IOException e) {
 //            throw new RuntimeException(e);
 //        }
+        passwords.add("princess");
         passwords.add("welcome");
+        passwords.add("admin");
 
         Map<String, String> authData1 = new HashMap<>();
         authData1.put("login", "super_admin");
