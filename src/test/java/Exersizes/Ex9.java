@@ -13,23 +13,23 @@ public class Ex9 {
     public void testPassword() {
 
         List<String> passwords = new ArrayList<>();
-//        try (FileReader f = new FileReader("src/test/resources/passwords.txt")) {
-//            StringBuffer sb = new StringBuffer();
-//            while (f.ready()) {
-//                char c = (char) f.read();
-//                if (c == '\n') {
-//                    passwords.add(sb.toString());
-//                    sb = new StringBuffer();
-//                } else {
-//                    sb.append(c);
-//                }
-//            }
-//            if (sb.length() > 0) {
-//                passwords.add(sb.toString());
-//            }
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+        try (FileReader f = new FileReader("src/test/resources/passwords.txt")) {
+            StringBuilder sb = new StringBuilder();
+            while (f.ready()) {
+                char c = (char) f.read();
+                if (c == '\n') {
+                    passwords.add(sb.toString());
+                    sb = new StringBuilder();
+                } else {
+                    sb.append(c);
+                }
+            }
+            if (sb.length() > 0) {
+                passwords.add(sb.toString());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         passwords.add("princess");
         passwords.add("welcome");
         passwords.add("admin");
@@ -52,7 +52,6 @@ public class Ex9 {
                 break;
             }
         }
-
     }
 
     public boolean testCookie(String inputCookie) {
