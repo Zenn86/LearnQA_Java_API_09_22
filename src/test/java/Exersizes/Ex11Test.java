@@ -15,9 +15,11 @@ public class Ex11Test extends BaseTestCase {
         Response response = getResponse(url);
         assertFalse(response.getCookies().isEmpty(), "There is no cookies");
         Map<String, String> cookies = response.getCookies();
+
         Response response2 = RestAssured
-                .get("https://playground.learnqa.ru/api/homework_cookie")
+                .get(url)
                 .andReturn();
+
         assertFalse(response2.getCookies().isEmpty(), "There is no cookies");
         assertEquals(cookies, response2.getCookies(), "Cookies don't match");
         System.out.println(response.getCookies());
