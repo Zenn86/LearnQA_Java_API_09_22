@@ -3,7 +3,8 @@ package Exersizes;
 import io.restassured.response.Response;
 import lib.BaseTestCase;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Ex12Test extends BaseTestCase {
     private String url = "https://playground.learnqa.ru/api/homework_header";

@@ -4,9 +4,11 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import lib.BaseTestCase;
 import org.junit.jupiter.api.Test;
+
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class Ex11Test extends BaseTestCase {
     String url = "https://playground.learnqa.ru/api/homework_cookie";

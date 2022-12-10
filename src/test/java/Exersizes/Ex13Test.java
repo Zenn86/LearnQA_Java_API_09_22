@@ -4,7 +4,8 @@ import io.restassured.path.json.JsonPath;
 import lib.BaseTestCase;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Ex13Test extends BaseTestCase {
     String url = "https://playground.learnqa.ru/ajax/api/user_agent_check";
