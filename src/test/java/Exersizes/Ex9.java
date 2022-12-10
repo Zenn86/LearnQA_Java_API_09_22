@@ -17,10 +17,10 @@ public class Ex9 {
             StringBuilder sb = new StringBuilder();
             while (f.ready()) {
                 char c = (char) f.read();
-                if (c == '\n') {
+                if (c == '\r') {
                     passwords.add(sb.toString());
                     sb = new StringBuilder();
-                } else {
+                } else if (c != '\n') {
                     sb.append(c);
                 }
             }
@@ -30,9 +30,6 @@ public class Ex9 {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        passwords.add("princess");
-        passwords.add("welcome");
-        passwords.add("admin");
 
         Map<String, String> authData1 = new HashMap<>();
         authData1.put("login", "super_admin");
@@ -47,6 +44,7 @@ public class Ex9 {
 
             String auth_cookie = response.getCookie("auth_cookie");
             System.out.println("password №" + (i + 1) + ": " + passwords.get(i));
+            response.print();
             if (testCookie(auth_cookie)) {
                 System.out.println("Right cookie: " + auth_cookie);
                 break;
@@ -63,7 +61,7 @@ public class Ex9 {
                 .andReturn();
 
         String answer = responseForCookieCheck.body().asString();
-        System.out.println(answer);
+//        System.out.println(answer);
         return answer.equals(rightAnswer);
     }
 
