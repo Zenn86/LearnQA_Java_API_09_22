@@ -3,6 +3,7 @@ package tests;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import lib.Assertions;
 import lib.BaseTestCase;
 import lib.DataGenerator;
 import org.junit.jupiter.api.Test;
@@ -51,7 +52,15 @@ public class UserEditTest extends BaseTestCase {
                 .put("https://playground.learnqa.ru/api/user/" + userId)
                 .andReturn();
 
+        //GET
+        Response responseAfterEditing = RestAssured
+                .given()
+                .header("x-csrf-token", getHeader(responseGetAuth, "x-csrf-token"))
+                .cookie("auth_sid", getCookie(responseGetAuth,"auth_sid"))
+                .get("https://playground.learnqa.ru/api/user/" + userId)
+                .andReturn();
 
+        Assertions.assertJsonByName(responseAfterEditing, "firstName", newName);
 
     }
 }
