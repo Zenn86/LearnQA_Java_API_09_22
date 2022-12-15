@@ -13,7 +13,7 @@ public class Ex12Test extends BaseTestCase {
 
     @Test
     public void testHeader() {
-        Response response = getResponse(url);
+        Response response = getResponseWithoutParams(url);
         assertEquals(expectedValue, getHeader(response, expectedHeader), "Header search error");
     }
 

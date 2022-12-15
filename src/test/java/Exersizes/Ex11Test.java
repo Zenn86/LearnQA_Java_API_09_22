@@ -14,7 +14,7 @@ public class Ex11Test extends BaseTestCase {
     String url = "https://playground.learnqa.ru/api/homework_cookie";
     @Test
     public void testCookie() {
-        Response response = getResponse(url);
+        Response response = getResponseWithoutParams(url);
         assertFalse(response.getCookies().isEmpty(), "There is no cookies");
         Map<String, String> cookies = response.getCookies();
 
