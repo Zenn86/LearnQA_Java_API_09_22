@@ -14,14 +14,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BaseTestCase {
 
-    protected Response getResponse(String url) {
+    protected Response getResponseWithoutParams(String url) {
         Response response = RestAssured
                 .get(url)
                 .andReturn();
         return response;
     }
 
-    protected JsonPath getJsonPath(String url) {
+    protected JsonPath getJsonPathWithoutParameters(String url) {
         JsonPath response = RestAssured
                 .get(url)
                 .jsonPath();
