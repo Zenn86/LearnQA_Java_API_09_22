@@ -11,9 +11,12 @@ import lib.BaseTestCase;
 import lib.DataGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @Epic("Registration cases")
 @Feature("Registration")
@@ -75,4 +78,53 @@ public class UserRegisterTest extends BaseTestCase {
         Assertions.assertResponseTextEquals(responseCreateUserWithInvalidEmail, "Invalid email format");
     }
 
+    @ParameterizedTest
+    @CsvSource(value = {
+            "13245:BorJo:Boris:Johnson",
+            " :Uncharted:Nathan:Drake",
+            "131345: :John:Doe",
+            "3131313:Maverick: :Gun",
+            "829739:Ufo:Alien: "
+    }, delimiter = ':')
+    public void testCreateUserWithOneEmptyParameter(String password, String userName, String firstName, String lastName) {
+        String email;
+        if (password != " " && userName != " " && firstName != " " && lastName != " ") {
+            email = null;
+        } else {
+            email = DataGenerator.getRandomEmail();
+        }
+        Map<String, String> userData = new HashMap<>();
+        userData.put("email", email);
+        userData.put("password", password);
+        userData.put("username", userName);
+        userData.put("firstName", firstName);
+        userData.put("lastName", lastName);
+
+        Response responseWithOneEmptyParameter = apiCoreRequests.makePostRequest(uriToCreateUser, userData);
+//        String expectedEmptyParameterName = null;
+        Set<String> keys = userData.keySet();
+        for (String key : keys) {
+            if (key.equals(null)) {
+                String expectedEmptyParameterName = key;
+                Assertions.assertResponseTextEquals(responseWithOneEmptyParameter,
+                        "The following required params are missed: " + expectedEmptyParameterName);
+                System.out.println("Success!");
+            }
+        }
+//        if (expectedEmptyParameterName == null) {
+//            Assertions.assertResponseTextEquals(responseWithOneEmptyParameter,
+//                    "The value of 'email' field is too short");
+//        } else {
+
+//        }
+
+//        if (userData.get("email").equals(" ")) {
+//
+//        }
+//        if (userData.get("password").equals(" ")) {
+//            expectedEmptyParameterName = "password";
+//        }
+
+        responseWithOneEmptyParameter.prettyPrint();
+    }
 }
