@@ -59,9 +59,10 @@ public class UserRegisterTest extends BaseTestCase {
     }
 
     @Test
-    @DisplayName("Test negative ")
+    @Description("This test tries to create a new user with invalid email")
+    @DisplayName("Test negative create user with invalid email")
     public void testCreateUserWithInvalidEmail() {
-        String invalidEmail = DataGenerator.getRandomEmail().replace('@', '-');
+        String invalidEmail = DataGenerator.getRandomEmail().replace('@', '.');
 
         Map<String, String> userData = new HashMap<>();
         userData.put("email", invalidEmail);
