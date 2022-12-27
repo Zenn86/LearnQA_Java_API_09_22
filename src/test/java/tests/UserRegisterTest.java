@@ -26,7 +26,7 @@ public class UserRegisterTest extends BaseTestCase {
     private final String uriToCreateUser = "https://playground.learnqa.ru/api/user/";
     @Test
     @Description("This test tries to create a new user with email, that was used before and owned by existing user")
-    @DisplayName("Test negative create user")
+    @DisplayName("Test negative create user with existing email")
     public void testCreateUserWithExistingEmail() {
         String email = "vinkotov@example.com";
 
@@ -111,5 +111,20 @@ public class UserRegisterTest extends BaseTestCase {
                         "The following required params are missed: " + key);
             }
         }
+    }
+
+    @Test
+    @Description("This test tries to create a new user with one symbol userName")
+    @DisplayName("Test negative create user with one symbol userName")
+    public void testCreateUserWithOneSymbolName() {
+        Map<String, String> userData = new HashMap<>();
+        userData.put("username", "I");
+        userData = DataGenerator.getRegistrationData(userData);
+
+        Response responseCreateUserWithOneSymbolUserName = apiCoreRequests
+                .makePostRequest(uriToCreateUser, userData);
+
+        Assertions.assertResponseCodeEquals(responseCreateUserWithOneSymbolUserName, 400);
+        Assertions.assertResponseTextEquals(responseCreateUserWithOneSymbolUserName, "The value of 'username' field is too short");
     }
 }
