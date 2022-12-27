@@ -9,6 +9,7 @@ import lib.ApiCoreRequests;
 import lib.Assertions;
 import lib.BaseTestCase;
 import lib.DataGenerator;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -125,6 +126,24 @@ public class UserRegisterTest extends BaseTestCase {
                 .makePostRequest(uriToCreateUser, userData);
 
         Assertions.assertResponseCodeEquals(responseCreateUserWithOneSymbolUserName, 400);
-        Assertions.assertResponseTextEquals(responseCreateUserWithOneSymbolUserName, "The value of 'username' field is too short");
+        Assertions.assertResponseTextEquals(responseCreateUserWithOneSymbolUserName,
+                "The value of 'username' field is too short");
+    }
+
+    @Test
+    @Description("This test tries to create a new user with 251 symbol userName")
+    @DisplayName("Test negative create user with 251 symbol userName")
+    public void testCreateUserWithLongUserName251Characters() {
+        String generatedUserName = RandomStringUtils.random(251, true, true);
+        Map<String, String> userData = new HashMap<>();
+        userData.put("username", generatedUserName);
+        userData = DataGenerator.getRegistrationData(userData);
+
+        Response responseCreateUserWith251SymbolUserName = apiCoreRequests
+                .makePostRequest(uriToCreateUser, userData);
+
+        Assertions.assertResponseCodeEquals(responseCreateUserWith251SymbolUserName, 400);
+        Assertions.assertResponseTextEquals(responseCreateUserWith251SymbolUserName,
+                "The value of 'username' field is too long");
     }
 }
