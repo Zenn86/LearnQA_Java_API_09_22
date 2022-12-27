@@ -2,6 +2,7 @@
 *.class
 .idea
 allure-results/
+target/
 # Log file
 *.log
 
