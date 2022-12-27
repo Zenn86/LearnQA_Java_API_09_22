@@ -47,7 +47,7 @@ public class UserRegisterTest extends BaseTestCase {
     @Test
     @Description("This test tries to create a new user and checks if it succeed")
     @DisplayName("Test positive create user")
-    public void testCreateUserSuccesfully() {
+    public void testCreateUserSuccessfully() {
 
         Map<String, String> userData = DataGenerator.getRegistrationData();
 
@@ -86,9 +86,11 @@ public class UserRegisterTest extends BaseTestCase {
             "3131313:Maverick: :Gun",
             "829739:Ufo:Alien: "
     }, delimiter = ':')
+    @Description("This test tries to create a new user with one empty parameter")
+    @DisplayName("Test negative create user with one missing parameter")
     public void testCreateUserWithOneEmptyParameter(String password, String userName, String firstName, String lastName) {
         String email;
-        if (password != " " && userName != " " && firstName != " " && lastName != " ") {
+        if (password != null && userName != null && firstName != null && lastName != null) {
             email = null;
         } else {
             email = DataGenerator.getRandomEmail();
@@ -101,30 +103,13 @@ public class UserRegisterTest extends BaseTestCase {
         userData.put("lastName", lastName);
 
         Response responseWithOneEmptyParameter = apiCoreRequests.makePostRequest(uriToCreateUser, userData);
-//        String expectedEmptyParameterName = null;
+        Assertions.assertResponseCodeEquals(responseWithOneEmptyParameter, 400);
         Set<String> keys = userData.keySet();
         for (String key : keys) {
-            if (key.equals(null)) {
-                String expectedEmptyParameterName = key;
+            if (userData.get(key) == null) {
                 Assertions.assertResponseTextEquals(responseWithOneEmptyParameter,
-                        "The following required params are missed: " + expectedEmptyParameterName);
-                System.out.println("Success!");
+                        "The following required params are missed: " + key);
             }
         }
-//        if (expectedEmptyParameterName == null) {
-//            Assertions.assertResponseTextEquals(responseWithOneEmptyParameter,
-//                    "The value of 'email' field is too short");
-//        } else {
-
-//        }
-
-//        if (userData.get("email").equals(" ")) {
-//
-//        }
-//        if (userData.get("password").equals(" ")) {
-//            expectedEmptyParameterName = "password";
-//        }
-
-        responseWithOneEmptyParameter.prettyPrint();
     }
 }
