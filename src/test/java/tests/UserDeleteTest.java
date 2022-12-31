@@ -1,9 +1,11 @@
 package tests;
 
 import io.qameta.allure.Description;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import lib.ApiCoreRequests;
 import lib.Assertions;
+import lib.DataGenerator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -32,4 +34,36 @@ public class UserDeleteTest {
         Assertions.assertResponseTextEquals(responseDeleteUserToFail,
                 "Please, do not delete test users with ID 1, 2, 3, 4 or 5.");
     }
+
+    @Test
+    @Description("This test tries to delete just created user")
+    @DisplayName("Test positive delete just created user")
+    public void testDeleteJustCreatedUser() {
+        //GENERATE USER
+        Map<String, String> userData = DataGenerator.getRegistrationData();
+
+        JsonPath responseCreateAuth = apiCoreRequests.
+                makePostRequest("https://playground.learnqa.ru/api/user/", userData).jsonPath();
+
+        String userId = responseCreateAuth.getString("id");
+
+        //LOGIN
+        Response responseGetAuth = apiCoreRequests.
+                makePostRequest("https://playground.learnqa.ru/api/user/login", userData);
+
+        //DELETE
+        Response responseDeleteUser = apiCoreRequests
+                .makeDeleteRequest("https://playground.learnqa.ru/api/user/" + userId,
+                        responseGetAuth.getHeader("x-csrf-token"), responseGetAuth.getCookie("auth_sid"));
+        Assertions.assertResponseCodeEquals(responseDeleteUser, 200);
+
+        //GET
+        Response responseAfterDeleting = apiCoreRequests
+                .makeGetRequestWithoutTokenAndCookie("https://playground.learnqa.ru/api/user/" + userId);
+
+        Assertions.assertResponseCodeEquals(responseAfterDeleting, 404);
+        Assertions.assertResponseTextEquals(responseAfterDeleting, "User not found");
+    }
+
+
 }
