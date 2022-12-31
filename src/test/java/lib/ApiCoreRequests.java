@@ -57,4 +57,13 @@ public class ApiCoreRequests {
                 .put(urlPlusUserId)
                 .andReturn();
     }
+
+    @Step("Make a PUT-request without header & cookie")
+    public Response makePutRequestWithoutHeaderAndCookie(String urlPlusUserId, Map<String, String> editData) {
+        return given()
+                .filter(new AllureRestAssured())
+                .body(editData)
+                .put(urlPlusUserId)
+                .andReturn();
+    }
 }
