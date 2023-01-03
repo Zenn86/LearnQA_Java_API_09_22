@@ -1,17 +1,25 @@
 package tests;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import lib.Assertions;
 import lib.BaseTestCase;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Epic("Get user's info cases")
+@Feature("Get user's info")
 public class UserGetTest extends BaseTestCase {
 
     @Test
+    @Description("This test tries to get user's info without auth")
+    @DisplayName("Test positive get user's info without auth")
     public void testGetUserDataNotAuth() {
         Response responseUserData = RestAssured
                 .get("https://playground.learnqa.ru/api/user/2")
@@ -24,6 +32,8 @@ public class UserGetTest extends BaseTestCase {
     }
 
     @Test
+    @Description("This test tries to get user's info with auth as same user")
+    @DisplayName("Test positive get user's info with auth as same user")
     public void testGetUserDetailsAuthAsSameUser() {
         Map<String, String> authData = new HashMap<>();
         authData.put("email", "vinkotov@example.com");
@@ -50,6 +60,8 @@ public class UserGetTest extends BaseTestCase {
     }
 
     @Test
+    @Description("This test tries to get user's info with auth as another user")
+    @DisplayName("Test positive get user's info with auth as another user")
     public void testGetUserDetailsAuthAsAnotherUser() {
         Map<String, String> authData = new HashMap<>();
         authData.put("email", "vinkotov@example.com");
@@ -75,6 +87,5 @@ public class UserGetTest extends BaseTestCase {
         Assertions.assertJsonHasNotFields(responseUserData, expectedFields);
         responseUserData.prettyPrint();
     }
-
 
 }
