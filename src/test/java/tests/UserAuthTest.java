@@ -67,15 +67,5 @@ public class UserAuthTest extends BaseTestCase {
             throw new IllegalArgumentException("Condition value is unknown: " + condition);
         }
 
-//        if (condition.equals("cookie")) {
-//            spec.cookie("auth_sid", this.cookie);
-//        } else if (condition.equals("headers")) {
-//            spec.header("x-csrf-token", this.header);
-//        } else {
-//            throw new IllegalArgumentException("Condition value is unknown: " + condition);
-//        }
-
-//        Response responseForCheck = spec.get().andReturn();
-//        Assertions.assertJsonByName(responseForCheck, "user_id", 0);
     }
 }
