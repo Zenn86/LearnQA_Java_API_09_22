@@ -78,6 +78,16 @@ public class UserEditTest extends BaseTestCase {
 
         Assertions.assertResponseCodeEquals(responseEditUser,400);
         Assertions.assertResponseTextEquals(responseEditUser, "Auth token not supplied");
+
+        //LOGIN (без авторизации сервер не отдаст нам firstName, чтобы мы могли проверить, что значение не изменилось
+        Response responseGetAuth = apiCoreRequests.
+                makePostRequest("https://playground.learnqa.ru/api/user/login", userData);
+
+        //GET
+        Response responseAfterEditing = apiCoreRequests
+                .makeGetRequest("https://playground.learnqa.ru/api/user/" + userId,
+                        responseGetAuth.getHeader("x-csrf-token"), responseGetAuth.getCookie("auth_sid"));
+        Assertions.assertNotJsonByName(responseAfterEditing, "firstName", newName);
     }
 
     @Test
