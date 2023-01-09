@@ -32,7 +32,6 @@ public class UserEditTest extends BaseTestCase {
         String userId = responseCreateAuth.getString("id");
 
         //LOGIN
-//        Map<String, String> authData = userData;
 
         Response responseGetAuth = apiCoreRequests.
                 makePostRequest("https://playground.learnqa.ru/api/user/login", userData);
@@ -147,7 +146,6 @@ public class UserEditTest extends BaseTestCase {
         String userId = responseCreateAuth.getString("id");
 
         //LOGIN
-//        Map<String, String> authData = userData;
 
         Response responseGetAuth = apiCoreRequests.
                 makePostRequest("https://playground.learnqa.ru/api/user/login", userData);
@@ -186,7 +184,6 @@ public class UserEditTest extends BaseTestCase {
         String userId = responseCreateAuth.getString("id");
 
         //LOGIN
-//        Map<String, String> authData = userData;
 
         Response responseGetAuth = apiCoreRequests.
                 makePostRequest("https://playground.learnqa.ru/api/user/login", userData);
