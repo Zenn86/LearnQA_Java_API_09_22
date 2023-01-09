@@ -32,10 +32,10 @@ public class UserEditTest extends BaseTestCase {
         String userId = responseCreateAuth.getString("id");
 
         //LOGIN
-        Map<String, String> authData = userData;
+//        Map<String, String> authData = userData;
 
         Response responseGetAuth = apiCoreRequests.
-                makePostRequest("https://playground.learnqa.ru/api/user/login", authData);
+                makePostRequest("https://playground.learnqa.ru/api/user/login", userData);
 
         //EDIT
         String newName = "Changed Name";
@@ -121,6 +121,17 @@ public class UserEditTest extends BaseTestCase {
 
         Assertions.assertResponseCodeEquals(responseEditUser, 400);
         Assertions.assertResponseTextEquals(responseEditUser, "Please, do not edit test users with ID 1, 2, 3, 4 or 5.");
+
+
+        //LOGIN AS CREATED USER
+        Response responseGetAuth2 = apiCoreRequests.
+                makePostRequest("https://playground.learnqa.ru/api/user/login", userData);
+
+        //GET
+        Response responseAfterEditing = apiCoreRequests
+                .makeGetRequest("https://playground.learnqa.ru/api/user/" + userId,
+                        responseGetAuth2.getHeader("x-csrf-token"), responseGetAuth2.getCookie("auth_sid"));
+        Assertions.assertNotJsonByName(responseAfterEditing, "firstName", newName);
     }
 
     @Test
@@ -136,10 +147,10 @@ public class UserEditTest extends BaseTestCase {
         String userId = responseCreateAuth.getString("id");
 
         //LOGIN
-        Map<String, String> authData = userData;
+//        Map<String, String> authData = userData;
 
         Response responseGetAuth = apiCoreRequests.
-                makePostRequest("https://playground.learnqa.ru/api/user/login", authData);
+                makePostRequest("https://playground.learnqa.ru/api/user/login", userData);
 
         //EDIT
         String invalidEmail = DataGenerator.getRandomEmail().replace('@', '.');
@@ -154,6 +165,12 @@ public class UserEditTest extends BaseTestCase {
 
         Assertions.assertResponseCodeEquals(responseEditUser, 400);
         Assertions.assertResponseTextEquals(responseEditUser,"Invalid email format");
+
+        //GET
+        Response responseAfterEditing = apiCoreRequests
+                .makeGetRequest("https://playground.learnqa.ru/api/user/" + userId,
+                        header, cookie);
+        Assertions.assertNotJsonByName(responseAfterEditing, "email", invalidEmail);
     }
 
     @Test
@@ -169,10 +186,10 @@ public class UserEditTest extends BaseTestCase {
         String userId = responseCreateAuth.getString("id");
 
         //LOGIN
-        Map<String, String> authData = userData;
+//        Map<String, String> authData = userData;
 
         Response responseGetAuth = apiCoreRequests.
-                makePostRequest("https://playground.learnqa.ru/api/user/login", authData);
+                makePostRequest("https://playground.learnqa.ru/api/user/login", userData);
 
         //EDIT
         Map<String, String> editData = new HashMap<>();
@@ -186,5 +203,11 @@ public class UserEditTest extends BaseTestCase {
 
         Assertions.assertResponseCodeEquals(responseEditUser, 400);
         Assertions.assertJsonByName(responseEditUser, "error", "Too short value for field username");
+
+        //GET
+        Response responseAfterEditing = apiCoreRequests
+                .makeGetRequest("https://playground.learnqa.ru/api/user/" + userId,
+                        header, cookie);
+        Assertions.assertNotJsonByName(responseAfterEditing, "username", "I");
     }
 }
